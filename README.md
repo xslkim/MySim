@@ -6,7 +6,8 @@
 
 - [调研报告:技术选型(v4,含三模型矩阵)](docs/01-research-report.md)
 - [开发路线图 v3](docs/02-roadmap.md)
-- [多 agent 全自动开发方案 v5(经 5 轮方案-审查迭代)](docs/plan/00-overview.md) — 含执行摘要;全部评审记录见 docs/plan/_reviews/
+- [多 agent 全自动开发方案 v5(经 5 轮方案-审查迭代,过程记录未入库)](docs/plan/00-overview.md) — 含执行摘要
+- [文档评审反馈与环境勘误(2026-08-27 实测)](docs/04-doc-review.md)
 - [AGENTS.md:协作约定与环境事实](AGENTS.md)
 
 当前状态:调研与开发方案已完成(终审 PASS WITH NOTES),**待用户确认后启动 M0**(双仿真器环境验证)。

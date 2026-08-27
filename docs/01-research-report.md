@@ -10,7 +10,9 @@
 1. **仿真器选 CARLA 0.9.15(UE4 线),而不是 0.10(UE5 线)**。截至 2026-08,CARLA 0.10.0(UE5.5)仍是技术预览:只有 1 张城镇地图、天气锁死白天、~25 FPS、**ScenarioRunner/Leaderboard/Bench2Drive 全部不兼容**。E2E 闭环训练+评测的完整生态(2026 年的"最新方案"如 SimLingo、ORION、Bench2Drive)全部建立在 0.9.15 上。UE5 版作为后续迁移路径保留(见 §6)。
 2. **最大环境风险是 WSL2**:CARLA 渲染依赖 Vulkan,WSL2 的 Vulkan 支持长期残缺(官方不支持)。项目第一件事必须是实测验证,备选方案见 §5。
 3. **端到端方案首选 SimLingo**(CVPR'25 Highlight,CARLA Challenge 2024 冠军,Bench2Drive 驾驶分 85.94,权重/数据/代码全开,Apache-2.0);基线用 Bench2DriveZoo(UniAD/VAD/TCP 官方权重直接可评)。
+   > 分数口径统一(2026-08-27):SimLingo 对比实验一律以**论文 Table 2(DS 85.07±0.95,3 seeds)**为准(plan T1.2/CP1 已钉此口径);本文 85.94/85.9/85.1 等均为 README/榜单转述口径,引用时以论文为准。
 4. **RTX 5090(sm_120)是个坑**:需要 PyTorch ≥2.7 / CUDA ≥12.8,而 CARLA 0.9.15 客户端锁 Python 3.7/3.8 → **仿真环境和训练环境必须分开**(conda 多环境)。
+   > 更正(2026-08-27):PyPI 实测 `carla==0.9.15` 另有 cp39/**cp310** wheel,可与 torch≥2.7 同居 py3.10 环境(AutoMoT 官方栈先例);环境拓扑以 `docs/plan/01-infra.md` §3 为准。§2.1 表同源错误一并更正。
 5. 磁盘紧张:可用 585GB,而 Bench2Drive Base 数据集 ~400GB、carla_garage 数据集 364GB。初期只用 Mini(4GB)/Dev10 冒烟,大规模数据按需下载。
 
 ## 1. 本机环境
@@ -38,7 +40,7 @@
 | Bench2Drive / 各 E2E 方案 | 全部支持(锁 0.9.15) | 无一支持 |
 | 性能 | Epic 画质流畅 | 官方内测峰值 ~25 FPS |
 | 磁盘 | 包 ~30GB | 包 130GB,源码构建 225GB+ |
-| Python 包 | `carla`(0.9.15 锁 py3.7/3.8) | `carla-ue5-api`(**不能混装**) |
+| Python 包 | `carla`(0.9.15 wheel:cp37/cp38/cp39/**cp310**,cp310 可配 torch≥2.7;更正见 §0 第 4 点注) | `carla-ue5-api`(**不能混装**) |
 
 ### 2.2 0.9 → 0.10 迁移难度
 

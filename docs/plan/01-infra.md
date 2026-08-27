@@ -1,6 +1,7 @@
 # 01 — 环境与基建自动化
 
-> 版本 v5(终稿)· 2026-08-27 · 第 5 轮(依据 `docs/plan/_reviews/round-4.md` 修订)
+> 版本 v5(终稿)· 2026-08-27 · 第 5 轮(依据第 4 轮评审修订;评审过程记录未入库,发现以正文条款为准)
+> 勘误 2026-08-27(依据 `docs/04-doc-review.md`,本机实测):§2.1 盘位 D:\carla → **C:\carla**(实测 D: 仅余 ~62GB 装不下);§4.3 按实测宿主物理 63.4GiB 重写算术(结论不变:32GB 闭合,且当前 56GB 配置不闭合,T0.1 动作为降档);§5 磁盘预算拆 Windows/WSL 两侧。
 > v5 变更:本文档内容无实质修订(v4 的 §4.3 门禁/§5 预算/§6 规范经 round-4 复核闭环);仅升版对齐。相关新条款位置:MDE 治理与扩容预算见 `00-overview.md` CP3/§7 与 `02-execution.md` 附录(R4-N1);limitation 条款见 `02-execution.md` T5.2(R4-N2)。
 > v4 变更:§4.3 CP0 门禁测试负载定义 + 告警线锚定规则(N6);§5 磁盘预算重算(ckpt 40→45GB 训练态口径、envs 28→36GB MindDrive 临时 env,N5/N10);§6 增训练过程指标本地落盘规范(N4)。
 > 读者:env-agent 与 orchestrator。目标:"照此文档即可装出双仿真器环境",不留自由发挥空间。
@@ -18,16 +19,16 @@ Windows 11 宿主跑两台原生 CARLA server;WSL2(Ubuntu 22.04)跑全部 Python
 
 ### 2.1 安装(任务卡 T0.2/T0.3,人工半参与)
 
-| 项 | 值(提议,CP0 登记为准) |
+| 项 | 值(CP0 登记为准) |
 |---|---|
-| UE5 server | `D:\carla\CARLA_0.10.0\`(官方 `[Windows 11] CARLA_0.10.0.zip`) |
-| UE4 server | `D:\carla\CARLA_0.9.15\`(Town10HD 由 T0.3 `get_available_maps()` 坐实,缺则补 AdditionalMaps) |
+| UE5 server | `C:\carla\CARLA_0.10.0\`(官方 `[Windows 11] CARLA_0.10.0.zip`;**盘位 2026-08-27 拍板 C:,D: 实测仅余 ~62GB 弃用**) |
+| UE4 server | `C:\carla\CARLA_0.9.15\`(Town10HD 由 T0.3 `get_available_maps()` 坐实,缺则补 AdditionalMaps) |
 | 端口 | UE5: 2000/2001/2002;UE4: 2010/2011/2012(错开,禁改) |
 | 数据盘 | WSL2 ext4(`~/data/`),不放 `/mnt/c`;Windows 侧只放 server;harness 需要的 `PythonAPI` 纯 Python 目录**拷入 WSL ext4 再设 PYTHONPATH**(G5) |
 
-**盘位前置(T0.1)**:登记 C:/D: 可用空间、WSL vhdx 位置与上限;错配则 vhdx 迁移步骤进 `windows-actions.md`。
+**盘位前置(T0.1)**:登记各盘可用空间与 **WSL vhdx 物理位置**(1.5T 盘是独立盘还是 C: 上的大 vhdx 未验证);若 vhdx 与 C: 同盘,记已知坑"采数期 server 读 + dataloader 读同盘 I/O 竞争";错配则 vhdx 迁移步骤进 `windows-actions.md`。D: 登记为"已评估弃用,余 ~62GB"。
 
-**下载纪律**:**下载解压一律 Windows 侧**(`powershell.exe curl.exe -C -` + 7z;`/mnt/*` 9P 吞吐差);WSL 仅校验。校验分支:**官方公布 sha256 则校验散列;无散列则以文件大小 + 启动冒烟替代**(G4)。流程:下载 → 校验 → 解压 → **立即删 zip** → 登记。水位超 80% 暂停上报。
+**下载纪律**:**下载解压一律 Windows 侧**(`powershell.exe curl.exe -C -` + 7z;`/mnt/*` 9P 吞吐差);WSL 仅校验。校验分支:**官方公布 sha256 则校验散列;无散列则以文件大小 + 启动冒烟替代**(G4)。流程:下载 → 校验 → 解压 → **立即删 zip** → 登记。水位超 80% 暂停上报。**镜像优先级(AGENTS.md 规则 #6)**:HF 走 `HF_ENDPOINT=https://hf-mirror.com`(WSL 侧数据集/权重);pip/conda 走清华源;GitHub release(CARLA zip 等 Windows 侧下载)优先代理加速,失效回退官方源并登记。
 
 ### 2.2 启动与崩溃重启(产物 `tools/win/`)
 
@@ -43,15 +44,16 @@ Windows 11 宿主跑两台原生 CARLA server;WSL2(Ubuntu 22.04)跑全部 Python
   4. 同时监控宿主 RAM(§4.3)。
 - 0.10 启动异常预案:#9439/#9409 → 清洁重装驱动 / 降 Low / 关 overlay;仍败升级人工。
 - **宿主重启恢复 runbook**:① 开机自启 server 任务计划(CP0 人装);② orchestrator 检测 server 全灭 → 挂起 GPU 队列 + 报警 + 断点续跑入口;**训练任务按 resume 协议拉起(损失上限 = ckpt 间隔,N3)**。
+- **远程会话(CP0 冒烟必测)**:宿主常经远程桌面访问(Todesk/向日葵/Microsoft Remote Display 在册);窗口模式 server 在远程会话断开/注销后的存活行为未验证——CP0 冒烟须含"远程会话断开后 server 存活"项,失败则启用开机自启+自动登录预案并升级人工。
 
 ### 2.3 WSL2 ↔ Windows 互操作约定
 
 - 可用 `powershell.exe -Command ...`:进程查杀、启动 exe、查磁盘、**查显存(`nvidia-smi.exe`,Windows 侧为准;WSL 内 NVML 查询不全,[NVIDIA CUDA on WSL 指南](https://docs.nvidia.com/cuda/wsl-user-guide/index.html))**。**禁止**:改注册表、装 Windows 软件、动防火墙。
-- `.wslconfig` 模板由 env-agent 生成(§4.3),人落盘并 `wsl --shutdown` 生效(CP0 前置)。
+- `.wslconfig` 已存在(56GB/16/32GB),动作是**降档**(§4.3);env-agent 生成目标配置,人落盘并 `wsl --shutdown` 生效(CP0 前置)。
 
 ## 3. WSL2 环境拓扑(按模型分 env)
 
-`carla==0.9.15` PyPI 只有 cp27/cp37/cp38/cp39/**cp310** wheel([PyPI JSON 已核实](https://pypi.org/pypi/carla/0.9.15/json));torch≥2.7 不支持 py3.8。官方先例:**py3.10 + torch 2.7.1+cu128 + carla==0.9.15 + flash-attn==2.8.3 + transformers==4.57.3**([AutoMoT requirements.txt 原文已核实](https://raw.githubusercontent.com/OscarHuangWind/AutoMoT/release/requirements.txt),文件标题即 "AutoMoT + Bench2Drive requirements"——官方同 env 同居 harness 依赖)。
+`carla==0.9.15` PyPI 只有 cp27/cp37/cp38/cp39/**cp310** wheel([PyPI JSON 已核实](https://pypi.org/pypi/carla/0.9.15/json));torch≥2.7 不支持 py3.8。官方先例:**py3.10 + torch 2.7.1+cu128 + carla==0.9.15 + flash-attn==2.8.3 + transformers==4.57.3**([AutoMoT requirements.txt 原文已核实](https://raw.githubusercontent.com/OscarHuangWind/AutoMoT/release/requirements.txt),文件标题即 "AutoMoT + Bench2Drive requirements"——官方同 env 同居 harness 依赖;注意 `carla` 不在该文件内,`mysim-automot` 的 `carla==0.9.15` 是本项目追加,T0.4 落记录时注明)。
 
 | conda env | Python | 关键包 | 用途 | 估体积 |
 |---|---|---|---|---|
@@ -83,12 +85,17 @@ Windows 11 宿主跑两台原生 CARLA server;WSL2(Ubuntu 22.04)跑全部 Python
 
 取锁核查走 `powershell.exe nvidia-smi.exe`。**同存实测两段**:M0(T0.5/T0.6)用合成显存负载(torch 分配 8GB/13GB 常驻 buffer 模拟 SimLingo/AutoMoT);真实模型同存下沉 T1.2(UE4)与 T3.4(UE5 AutoMoT 顶格)首跑冒烟。两段数据回填 §4.1。
 
-### 4.3 宿主 RAM 预算与 CP0 门禁(N6 闭合)
+### 4.3 宿主 RAM 预算与 CP0 门禁(2026-08-27 实测基数重写)
 
-- 概念:`memory=32GB` 是 WSL2 **占用上限**非预留;宿主可用 = 54 − WSL 实际占用。
-- 最坏情形算术:宿主需求 = Win11 6–8GB + UE5 server 主机内存 8–16GB = **14–24GB**;WSL 顶满 32GB 时宿主余 22GB < 24GB —— 不闭合,闭合手段:
-  1. `.wslconfig`:`memory=32GB`、`processors=14`、`swap=16GB`(swap 兜 WSL 尖峰,不救宿主);
-  2. **CP0 门禁(负载定义,N6)**:WSL 侧内存压力注入至 **28–32GB**(`stress-ng --vm` 或等效,模拟采数/训练 dataloading 顶满态)+ UE5 server 运行态,测宿主空闲 ≥6GB;不满足则 WSL memory 降 28GB(顶满时宿主余 26GB > 24GB,闭合)并重冒烟;
+- 实测基数(2026-08-27,`docs/04-doc-review.md`):宿主物理 **63.4GiB**(≈64GiB);`.wslconfig` **已存在** = memory=56GB / processors=16 / swap=32GB。
+- 概念:`memory=` 是 WSL2 **占用上限**非预留;宿主可用 = 63.4GiB − WSL 实际占用。
+- 最坏情形算术:宿主需求 = Win11 6–8GB + UE5 server 主机内存 8–16GB = **14–24GiB**。
+  - 当前 56GB:63.4−56 = 7.4GiB < 14–24 —— **现状不闭合**,T0.1 必须降档;
+  - 目标 32GB:63.4−32 = 31.4GiB > 24 —— **闭合,余量 ~7.4GiB**(32GB 推荐成立);
+  - 降档预案 28GB:63.4−28 = 35.4GiB —— 余量更大,大概率用不上,保留。
+- 闭合手段:
+  1. `.wslconfig` 降档:`memory=32GB`、`processors=14`、`swap=16GB`(56/16/32 → 目标值;swap 兜 WSL 尖峰,不救宿主);
+  2. **CP0 门禁(负载定义,N6)**:WSL 侧内存压力注入至 **28–32GB**(`stress-ng --vm` 或等效,模拟采数/训练 dataloading 顶满态)+ UE5 server 运行态,测宿主空闲 ≥6GB;不满足则 WSL memory 降 28GB 并重冒烟;
   3. **告警线锚定**:降档/实测后记录最坏稳态宿主空闲 S,watchdog 告警线 = **S − 2GB**(替代静态 4GB,避免最坏稳态下告警疲劳);<2GB 硬停写盘任务不变。
   4. T0.5 的 server RAM 实测值直接对门禁做判定;实测 >16GB 时门禁余量同步上调。
 
@@ -96,12 +103,20 @@ Windows 11 宿主跑两台原生 CARLA server;WSL2(Ubuntu 22.04)跑全部 Python
 
 CP 关联 > 关键路径 > 可选旁支(MindDrive)> 重跑/补数。orchestrator 每轮处理一次队列。
 
-## 5. 磁盘预算表(585GB 硬预算;v4 重算,N5/N10)
+## 5. 磁盘预算(2026-08-27 勘误:拆 Windows/WSL 两侧;server 落 C:)
+
+### 5.1 Windows C: 侧(剩 ~795GB,server 专用)
 
 | 项 | 预算 GB | 说明 |
 |---|---|---|
 | CARLA 0.10.0 server(zip 已删) | 130 | 瞬态峰值见下 |
 | CARLA 0.9.15 server(+ 可能 AdditionalMaps) | 30(最多 50) | T0.3 坐实 Town10HD |
+| **峰值 / 稳态** | **~290 / ~160** | 峰值 = 稳态 + 0.10 zip 瞬态 ≤130(下完即删);对 C: 的 795GB 充足 |
+
+### 5.2 WSL vhdx 侧(所在盘剩 ~582GB = 数据预算;无 zip 瞬态)
+
+| 项 | 预算 GB | 说明 |
+|---|---|---|
 | conda envs ×3 + MindDrive 临时 env | 36 | N10:临时 env +8GB,归档后即删 |
 | HF/torch 缓存 | 20 | — |
 | SimLingo 仓库 + 官方 ckpt | 10 | — |
@@ -112,12 +127,11 @@ CP 关联 > 关键路径 > 可选旁支(MindDrive)> 重跑/补数。orchestrator
 | M4 0.10 自采数据(M 档 20h ≈ 288k 帧) | 50 | 算术见 T4.2 |
 | M4 微调 ckpt | **45** | N3/N5 口径:2 份 resume 全态(1B 全量微调 + AdamW 状态 ≈12–14GB/份 ≈ 24–28GB)+ 1 份 best model-only + T4.5 候选 2–3 份 model-only(≈2–4GB/份)|
 | experiments/ logs/ state/ | 10 | — |
-| **已分配小计** | **~372(上限 392)** | |
-| **缓冲** | **~193–213** | 下载瞬态:372 + 0.10 zip ≤130 ≈ **502GB 峰值**,仍在 585 内 |
+| **已分配小计** | **~212** | 对 582GB 水位约 **36%**,余量充裕 |
 
 **明确不下载**:Bench2Drive Base/Full、carla_garage 全量、LEAD、SimLingo 全量数据;SimLingo 子集调试单批 ≤10GB 经 CP3 批准。
 
-水位线:≥80% 告警停新下载;≥90% 硬停写盘,生成清理任务卡(禁清 EXP)。
+水位线(监控对象 = **vhdx 所在盘的 df**):≥80% 告警停新下载;≥90% 硬停写盘,生成清理任务卡(禁清 EXP)。
 
 ## 6. 日志与实验记录规范(N4 增训练过程指标)
 
