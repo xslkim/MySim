@@ -1,0 +1,49 @@
+{
+  "host": "172.28.96.1",
+  "port": 2031,
+  "dt": 0.05,
+  "events": [],
+  "probes": {
+    "available_maps": [
+      "/Game/Carla/Maps/Town01",
+      "/Game/Carla/Maps/Town01_Opt",
+      "/Game/Carla/Maps/Town02",
+      "/Game/Carla/Maps/Town02_Opt",
+      "/Game/Carla/Maps/Town03",
+      "/Game/Carla/Maps/Town03_Opt",
+      "/Game/Carla/Maps/Town04",
+      "/Game/Carla/Maps/Town04_Opt",
+      "/Game/Carla/Maps/Town05",
+      "/Game/Carla/Maps/Town05_Opt",
+      "/Game/Carla/Maps/Town06",
+      "/Game/Carla/Maps/Town06_Opt",
+      "/Game/Carla/Maps/Town07",
+      "/Game/Carla/Maps/Town07_Opt",
+      "/Game/Carla/Maps/Town10HD",
+      "/Game/Carla/Maps/Town10HD_Opt",
+      "/Game/Carla/Maps/Town11/Town11",
+      "/Game/Carla/Maps/Town12/Town12",
+      "/Game/Carla/Maps/Town13/Town13",
+      "/Game/Carla/Maps/Town15/Town15"
+    ],
+    "traffic_manager": "ok (port 8000)"
+  },
+  "rpc_latency_s": 0.03,
+  "server_version": true,
+  "map": "Carla/Maps/Town10HD_Opt",
+  "vehicle": "vehicle.tesla.model3",
+  "sync": {
+    "ticks": 200,
+    "elapsed_s": 2.05,
+    "achieved_fps": 97.6,
+    "target_fps": 20.0
+  },
+  "camera": {
+    "frames": 33251,
+    "MB": 116898.0,
+    "dropped_frames": 0,
+    "wall_s": 302.0
+  },
+  "elapsed_s": 302.4,
+  "result": "PASS"
+}

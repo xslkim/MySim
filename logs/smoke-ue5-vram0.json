@@ -1,0 +1,31 @@
+{
+  "host": "172.28.96.1",
+  "port": 2021,
+  "dt": 0.05,
+  "events": [],
+  "probes": {
+    "available_maps": [
+      "/Game/Carla/Maps/Mine_01",
+      "/Game/Carla/Maps/Town10HD_Opt"
+    ],
+    "traffic_manager": "ok (port 8000)"
+  },
+  "rpc_latency_s": 0.05,
+  "server_version": true,
+  "map": "Carla/Maps/Town10HD_Opt",
+  "vehicle": "vehicle.taxi.ford",
+  "sync": {
+    "ticks": 200,
+    "elapsed_s": 4.43,
+    "achieved_fps": 45.2,
+    "target_fps": 20.0
+  },
+  "camera": {
+    "frames": 2626,
+    "MB": 9232.0,
+    "dropped_frames": 0,
+    "wall_s": 64.4
+  },
+  "elapsed_s": 66.7,
+  "result": "PASS"
+}

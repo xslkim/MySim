@@ -1,0 +1,38 @@
+[07:44:42] 启动 UE5 server (2021, adapter=0)
+
+   Id
+   --
+14624
+
+
+[07:44:42] 等 RPC 就绪 + 5090 占用校验
+RPC ready in 10.3s; nvidia-smi mem.used=8062 MiB
+[07:44:55] 压 WSL 28GB 驻留 240s + 采宿主 RAM
+[ram-gate] allocating 28.0 GiB ...
+[ram-gate] touched 30064771072 bytes; holding 240s
+2026-08-28 07:45:59 host_free_KB=13368896 vram=8037 MiB
+2026-08-28 07:46:14 host_free_KB=13343828 vram=8037 MiB
+2026-08-28 07:46:32 host_free_KB=13304144 vram=8037 MiB
+2026-08-28 07:46:47 host_free_KB=13259712 vram=8037 MiB
+2026-08-28 07:47:05 host_free_KB=13247936 vram=8037 MiB
+2026-08-28 07:47:20 host_free_KB=13091476 vram=8170 MiB
+2026-08-28 07:47:37 host_free_KB=12904228 vram=8156 MiB
+2026-08-28 07:47:53 host_free_KB=13649824 vram=8028 MiB
+2026-08-28 07:48:11 host_free_KB=13631528 vram=8018 MiB
+2026-08-28 07:48:26 host_free_KB=14510400 vram=8023 MiB
+2026-08-28 07:48:43 host_free_KB=14476712 vram=8024 MiB
+2026-08-28 07:48:59 host_free_KB=14270988 vram=8114 MiB
+[ram-gate] done
+[07:49:19] 释压完成,server 存活检查
+server alive, actors: 24
+[07:49:20] 60s 冒烟回归
+libc++abi: terminating due to uncaught exception of type std::exception: std::exception
+/tmp/tmp3os3k5s7: line 17: 10053 Aborted                 (core dumped) python3 tools/smoke_carla.py --port 2021 --minutes 1 --frames 50 --out logs/smoke-ue5-rerun.json
+ERROR conda.cli.main_run:execute(142): `conda run python3 tools/smoke_carla.py --port 2021 --minutes 1 --frames 50 --out logs/smoke-ue5-rerun.json` failed. (See above for error)
+[stage] sync done: {'ticks': 200, 'elapsed_s': 4.77, 'achieved_fps': 41.9, 'target_fps': 20.0}
+[stage] autopilot on, cruise start
+[stage] cruise 30s frames=1418
+[stage] cruise done frames=2631
+[stage] actors destroyed
+[07:50:27] 收尾杀 server
+[07:50:27] RETEST_DONE

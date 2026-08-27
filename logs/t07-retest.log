@@ -1,0 +1,44 @@
+[07:38:02] 启动 UE5 server (2021, adapter=2)
+
+   Id
+   --
+15276
+
+
+[07:38:02] 等 RPC 就绪
+[07:38:03] 压 WSL 28GB 驻留 240s + 采宿主 RAM
+[ram-gate] allocating 28.0 GiB ...
+[ram-gate] touched 30064771072 bytes; holding 240s
+2026-08-28 07:39:07 host_free_KB=12020108 vram=1759 MiB
+2026-08-28 07:39:23 host_free_KB=12082888 vram=1759 MiB
+2026-08-28 07:39:40 host_free_KB=12085608 vram=1759 MiB
+2026-08-28 07:39:55 host_free_KB=12087972 vram=1759 MiB
+2026-08-28 07:40:13 host_free_KB=12062800 vram=1759 MiB
+2026-08-28 07:40:28 host_free_KB=12027076 vram=1754 MiB
+2026-08-28 07:40:46 host_free_KB=12018968 vram=1757 MiB
+2026-08-28 07:41:01 host_free_KB=17784288 vram=1749 MiB
+2026-08-28 07:41:19 host_free_KB=17725004 vram=1749 MiB
+2026-08-28 07:41:34 host_free_KB=17734136 vram=1749 MiB
+2026-08-28 07:41:51 host_free_KB=17723984 vram=1749 MiB
+2026-08-28 07:42:07 host_free_KB=17739912 vram=1749 MiB
+[ram-gate] done
+[07:42:28] 释压完成,server 存活检查
+Traceback (most recent call last):
+  File "<string>", line 3, in <module>
+RuntimeError: Connection refused
+ERROR conda.cli.main_run:execute(142): `conda run python3 -c 
+import carla; c=carla.Client('172.28.96.1',2021); c.set_timeout(10.0)
+print('server alive, actors:', len(c.get_world().get_actors()))` failed. (See above for error)
+SERVER_DIED
+[07:42:30] 60s 冒烟回归
+Traceback (most recent call last):
+  File "/home/xsl/MySim/tools/smoke_carla.py", line 161, in <module>
+    main()
+  File "/home/xsl/MySim/tools/smoke_carla.py", line 36, in main
+    world = client.get_world()
+            ^^^^^^^^^^^^^^^^^^
+RuntimeError: Connection refused
+SMOKE_FAIL: Connection refused
+ERROR conda.cli.main_run:execute(142): `conda run python3 tools/smoke_carla.py --port 2021 --minutes 1 --frames 50 --out logs/smoke-ue5-rerun.json` failed. (See above for error)
+[07:42:31] 收尾杀 server
+[07:42:31] RETEST_DONE

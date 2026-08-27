@@ -25,7 +25,7 @@
 - 判据:WSL2 内存 ≥32GB;双侧 nvidia-smi 读数差异记录;C:/D: 盘位与 vhdx 登记(必要时迁移步骤进 windows-actions);宿主 IP 获取脚本验证;目录骨架建立。时长 0.5 天;资源 D。
 
 ### T0.2 下载安装 CARLA 0.10.0 [与 T0.3 并行]
-- 输出:`D:\carla\CARLA_0.10.0\`,zip 已删。Windows 侧 `curl.exe -C -` + 7z;WSL 仅校验;**校验分支:有官方 sha256 校验散列,无则文件大小 + 启动冒烟替代**。
+- 输出:`C:\carla\CARLA_0.10.0\`,zip 已删。Windows 侧 `curl.exe -C -` + 7z;WSL 仅校验;**校验分支:有官方 sha256 校验散列,无则文件大小 + 启动冒烟替代**。
 - 判据:`CarlaUE5.exe` 存在;瞬态峰值未触发 80% 水位;登记占用。墙钟 2–6h;资源 D。
 
 ### T0.3 下载安装 CARLA 0.9.15 [与 T0.2 并行]
@@ -57,7 +57,7 @@
 
 ### T1.1 Bench2Drive + SimLingo 评测 harness 装配 [依赖 T1.0]
 - 输入:仓库锁 commit;**Bench2Drive 钉 v0.0.3**。输出:评测入口脚本。
-- `PythonAPI` 纯 Python 目录拷入 WSL ext4 再设 PYTHONPATH(不跨 `/mnt/d`)。
+- `PythonAPI` 纯 Python 目录拷入 WSL ext4 再设 PYTHONPATH(不跨 `/mnt/c`)。
 - 判据:harness 加载路线并连 UE4 server;**3 条路线 leaderboard 空场景冒烟通过**(T3.0 前置)。时长 0.5–1 天;资源 D。
 
 ### T1.2 SimLingo 官方权重评测(sanity check)[GPU 长任务]

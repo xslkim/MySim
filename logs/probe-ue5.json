@@ -1,0 +1,29 @@
+{
+  "host": "172.28.96.1",
+  "port": 2021,
+  "blueprints": {
+    "sensor.camera.rgb": "ok",
+    "sensor.camera.depth": "ok",
+    "sensor.camera.semantic_segmentation": "ok",
+    "sensor.camera.instance_segmentation": "ok",
+    "sensor.camera.dvs": "ok",
+    "sensor.camera.optical_flow": "ok",
+    "sensor.lidar.ray_cast": "ok",
+    "sensor.lidar.ray_cast_semantic": "ok",
+    "sensor.other.radar": "ok",
+    "sensor.other.gnss": "ok",
+    "sensor.other.imu": "ok",
+    "sensor.other.collision": "ok",
+    "sensor.other.lane_invasion": "ok",
+    "sensor.other.obstacle": "ok"
+  },
+  "api": {
+    "weather_get_set": "ok",
+    "traffic_lights_found": 15,
+    "trafficmanager": "ok",
+    "sync_mode": "ok",
+    "map": "Carla/Maps/Town10HD_Opt",
+    "spawn_points": 155,
+    "spectator": "ok"
+  }
+}
