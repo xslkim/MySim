@@ -1,0 +1,173 @@
+{
+  "summary": {
+    "n_frames": 8,
+    "B1_isolated__fast0_vs_ref0": {
+      "text_all_same": false,
+      "max_d_speed_wps": 0.125,
+      "max_d_route": 0.125
+    },
+    "B2_isolated__ref1_vs_ref0": {
+      "text_all_same": false,
+      "max_d_speed_wps": 1.5,
+      "max_d_route": 0.24609375
+    },
+    "B1_on_merged__fast1_vs_ref1": {
+      "text_all_same": false,
+      "max_d_speed_wps": 0.875,
+      "max_d_route": 0.0625
+    },
+    "B1B2_total__fast1_vs_ref0": {
+      "text_all_same": false,
+      "max_d_speed_wps": 1.5,
+      "max_d_route": 0.25
+    },
+    "timing": {
+      "median_ref0_ms": 1554.8481665027793,
+      "median_fast0_ms": 885.2404555000248,
+      "median_ref1_ms": 979.6820265000861,
+      "median_fast1_ms": 543.4231074978015,
+      "speedup_unmerged": 1.7564133641232302,
+      "speedup_merged_vs_orig": 2.8612109883624512
+    },
+    "n_tokens": [
+      20,
+      29,
+      17,
+      17,
+      17,
+      17,
+      17,
+      17
+    ]
+  },
+  "rows": [
+    {
+      "frame": 0,
+      "n_tokens": 20,
+      "t_ref0_ms": 2338.3403409970924,
+      "t_fast0_ms": 1007.8053349934635,
+      "t_ref1_ms": 1204.4807310012402,
+      "t_fast1_ms": 626.7804710005294,
+      "text_same_fast0_ref0": true,
+      "text_same_fast1_ref0": false,
+      "d_speed_fast0_ref0": 0.03125,
+      "d_route_fast0_ref0": 0.01953125,
+      "d_speed_fast1_ref0": 1.5,
+      "d_route_fast1_ref0": 0.25,
+      "text_ref0": "Prepare to do a lane change. Accelerate to drive with the target speed. Waypoints:",
+      "text_fast1": "Follow the route. Accelerate to follow the black car that is to the front. Waypoints:"
+    },
+    {
+      "frame": 1,
+      "n_tokens": 29,
+      "t_ref0_ms": 2485.8814229955897,
+      "t_fast0_ms": 1370.286320001469,
+      "t_ref1_ms": 1516.4892399989185,
+      "t_fast1_ms": 809.338065002521,
+      "text_same_fast0_ref0": false,
+      "text_same_fast1_ref0": false,
+      "d_speed_fast0_ref0": 0.014404296875,
+      "d_route_fast0_ref0": 0.0078125,
+      "d_speed_fast1_ref0": 0.25,
+      "d_route_fast1_ref0": 0.0078125,
+      "text_ref0": "Follow the route. Accelerate to follow the black car that is to the front right in 38.3 meters. Waypoints:",
+      "text_fast1": "Follow the route. Accelerate to follow the black car that is to the front right in 38.4 meters. Waypoints:"
+    },
+    {
+      "frame": 2,
+      "n_tokens": 17,
+      "t_ref0_ms": 1626.226089996635,
+      "t_fast0_ms": 879.8770330031402,
+      "t_ref1_ms": 972.9234089973033,
+      "t_fast1_ms": 559.461276003276,
+      "text_same_fast0_ref0": true,
+      "text_same_fast1_ref0": true,
+      "d_speed_fast0_ref0": 0.0625,
+      "d_route_fast0_ref0": 0.0068359375,
+      "d_speed_fast1_ref0": 0.125,
+      "d_route_fast1_ref0": 0.0390625,
+      "text_ref0": "Follow the route. Accelerate to drive with the target speed. Waypoints:",
+      "text_fast1": "Follow the route. Accelerate to drive with the target speed. Waypoints:"
+    },
+    {
+      "frame": 3,
+      "n_tokens": 17,
+      "t_ref0_ms": 1543.8998830068158,
+      "t_fast0_ms": 876.9475489971228,
+      "t_ref1_ms": 979.7657419985626,
+      "t_fast1_ms": 516.3512280050782,
+      "text_same_fast0_ref0": true,
+      "text_same_fast1_ref0": true,
+      "d_speed_fast0_ref0": 0.125,
+      "d_route_fast0_ref0": 0.048828125,
+      "d_speed_fast1_ref0": 0.25,
+      "d_route_fast1_ref0": 0.0078125,
+      "text_ref0": "Follow the route. Accelerate to drive with the target speed. Waypoints:",
+      "text_fast1": "Follow the route. Accelerate to drive with the target speed. Waypoints:"
+    },
+    {
+      "frame": 4,
+      "n_tokens": 17,
+      "t_ref0_ms": 1555.076361000829,
+      "t_fast0_ms": 908.6723549989983,
+      "t_ref1_ms": 966.9839499983937,
+      "t_fast1_ms": 552.570564999769,
+      "text_same_fast0_ref0": true,
+      "text_same_fast1_ref0": true,
+      "d_speed_fast0_ref0": 0.125,
+      "d_route_fast0_ref0": 0.125,
+      "d_speed_fast1_ref0": 0.0625,
+      "d_route_fast1_ref0": 0.021484375,
+      "text_ref0": "Follow the route. Accelerate to drive with the target speed. Waypoints:",
+      "text_fast1": "Follow the route. Accelerate to drive with the target speed. Waypoints:"
+    },
+    {
+      "frame": 5,
+      "n_tokens": 17,
+      "t_ref0_ms": 1515.9581909974804,
+      "t_fast0_ms": 841.1712500019348,
+      "t_ref1_ms": 977.2973799990723,
+      "t_fast1_ms": 534.2756499958341,
+      "text_same_fast0_ref0": true,
+      "text_same_fast1_ref0": true,
+      "d_speed_fast0_ref0": 0.125,
+      "d_route_fast0_ref0": 0.01171875,
+      "d_speed_fast1_ref0": 0.125,
+      "d_route_fast1_ref0": 0.009765625,
+      "text_ref0": "Follow the route. Accelerate to drive with the target speed. Waypoints:",
+      "text_fast1": "Follow the route. Accelerate to drive with the target speed. Waypoints:"
+    },
+    {
+      "frame": 6,
+      "n_tokens": 17,
+      "t_ref0_ms": 1520.5484249963774,
+      "t_fast0_ms": 790.6280660026823,
+      "t_ref1_ms": 979.5983110016095,
+      "t_fast1_ms": 515.0594369988539,
+      "text_same_fast0_ref0": true,
+      "text_same_fast1_ref0": true,
+      "d_speed_fast0_ref0": 0.015625,
+      "d_route_fast0_ref0": 0.01953125,
+      "d_speed_fast1_ref0": 0.125,
+      "d_route_fast1_ref0": 0.03125,
+      "text_ref0": "Follow the route. Accelerate to drive with the target speed. Waypoints:",
+      "text_fast1": "Follow the route. Accelerate to drive with the target speed. Waypoints:"
+    },
+    {
+      "frame": 7,
+      "n_tokens": 17,
+      "t_ref0_ms": 1554.6199720047298,
+      "t_fast0_ms": 890.6038779969094,
+      "t_ref1_ms": 989.6476639987668,
+      "t_fast1_ms": 510.7481369996094,
+      "text_same_fast0_ref0": true,
+      "text_same_fast1_ref0": true,
+      "d_speed_fast0_ref0": 0.0625,
+      "d_route_fast0_ref0": 0.125,
+      "d_speed_fast1_ref0": 0.0390625,
+      "d_route_fast1_ref0": 0.125,
+      "text_ref0": "Follow the route. Accelerate to drive with the target speed. Waypoints:",
+      "text_fast1": "Follow the route. Accelerate to drive with the target speed. Waypoints:"
+    }
+  ]
+}

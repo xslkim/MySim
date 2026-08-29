@@ -1,0 +1,77 @@
+{
+  "summary": {
+    "median_orig_ms": 1629.127594998863,
+    "median_cache_ms": 847.687063000194,
+    "speedup": 1.9218502512388704,
+    "text_all_same": false,
+    "max_d_speed_wps": 0.9375,
+    "max_d_route": 0.6484375,
+    "cache_prefill_ms": 83.40388499709661,
+    "cache_decode_ms": 658.400349002477,
+    "cache_driving_fwd_ms": 87.20559900029912,
+    "n_tokens": [
+      17,
+      28,
+      17,
+      17,
+      17
+    ]
+  },
+  "rows": [
+    {
+      "t_orig_ms": 2208.393803000945,
+      "t_cache_ms": 921.6340159982792,
+      "text_same": true,
+      "max_d_speed_wps": 0.796875,
+      "max_d_route": 0.6328125,
+      "n_tokens": 17,
+      "cache_prefill_ms": 81.0888009982591,
+      "cache_decode_ms": 726.4663559981273,
+      "cache_driving_fwd_ms": 87.20559900029912
+    },
+    {
+      "t_orig_ms": 2624.3561070004944,
+      "t_cache_ms": 1294.4455950018892,
+      "text_same": false,
+      "max_d_speed_wps": 0.7421875,
+      "max_d_route": 0.625,
+      "n_tokens": 28,
+      "cache_prefill_ms": 91.49991099911858,
+      "cache_decode_ms": 1088.4896150018903,
+      "cache_driving_fwd_ms": 87.42474200334982
+    },
+    {
+      "t_orig_ms": 1608.777387002192,
+      "t_cache_ms": 847.687063000194,
+      "text_same": true,
+      "max_d_speed_wps": 0.8125,
+      "max_d_route": 0.64453125,
+      "n_tokens": 17,
+      "cache_prefill_ms": 81.77220800280338,
+      "cache_decode_ms": 654.7116069996264,
+      "cache_driving_fwd_ms": 87.07732200127793
+    },
+    {
+      "t_orig_ms": 1620.832258999144,
+      "t_cache_ms": 842.5064529983501,
+      "text_same": true,
+      "max_d_speed_wps": 0.9375,
+      "max_d_route": 0.5078125,
+      "n_tokens": 17,
+      "cache_prefill_ms": 83.40388499709661,
+      "cache_decode_ms": 658.400349002477,
+      "cache_driving_fwd_ms": 76.50540400209138
+    },
+    {
+      "t_orig_ms": 1629.127594998863,
+      "t_cache_ms": 827.9187879998062,
+      "text_same": true,
+      "max_d_speed_wps": 0.875,
+      "max_d_route": 0.6484375,
+      "n_tokens": 17,
+      "cache_prefill_ms": 84.21017100044992,
+      "cache_decode_ms": 620.3758379997453,
+      "cache_driving_fwd_ms": 90.91877600076259
+    }
+  ]
+}

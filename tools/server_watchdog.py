@@ -20,6 +20,10 @@ SIDES = {
     "ue4": {"port": 2031, "exe": r"C:\carla\CARLA_0.9.15\WindowsNoEditor",
             "cmd": r"C:\carla\CARLA_0.9.15\WindowsNoEditor\CarlaUE4.exe -carla-rpc-port=2031 -graphicsadapter={adapter} -quality-level=Epic -windowed -ResX=1280 -ResY=720",
             "kill": ["CarlaUE4-Win64-Shipping", "CarlaUE4"]},
+    # ue4b:第二 UE4 实例(双实例并发评测,T1.2 起;端口 2041–2043,winNAT 保留段 2756–3989 之外)
+    "ue4b": {"port": 2041, "exe": r"C:\carla\CARLA_0.9.15\WindowsNoEditor",
+            "cmd": r"C:\carla\CARLA_0.9.15\WindowsNoEditor\CarlaUE4.exe -carla-rpc-port=2041 -graphicsadapter={adapter} -quality-level=Epic -windowed -ResX=1280 -ResY=720",
+            "kill": ["CarlaUE4-Win64-Shipping", "CarlaUE4"]},
 }
 ADAPTER_CANDIDATES = [0, 2, 1, 3]
 GPU_DELTA_MB = 4000  # 启动后 5090 显存须比基线多这么多,否则判选错卡
@@ -46,9 +50,21 @@ def server_alive(port):
     except Exception:
         return False
 
+def _port_procs_ps(side):
+    """按命令行里的 -carla-rpc-port 匹配进程(双实例同名,按进程名杀会误伤另一侧)。"""
+    port = SIDES[side]["port"]
+    return (f"Get-CimInstance Win32_Process | Where-Object "
+            f"{{ $_.CommandLine -and $_.CommandLine.Contains('-carla-rpc-port={port}') }}")
+
 def kill_side(side):
-    for name in SIDES[side]["kill"]:
-        ps(f"Stop-Process -Name {name} -Force -ErrorAction SilentlyContinue")
+    # ue5 单实例时按名杀即可;ue4/ue4b 必须按命令行端口区分(同名进程,双实例并发)
+    ps(f"{_port_procs_ps(side)} | ForEach-Object {{ Stop-Process -Id $_.ProcessId -Force -ErrorAction SilentlyContinue }}")
+    # 兜底:命令行匹配漏掉的(如引导壳参数被改写场景)再按名扫,但仅当另一侧不在跑
+    other = [s for s in SIDES if s != side and SIDES[s]["exe"] == SIDES[side]["exe"]]
+    other_alive = any(server_alive(SIDES[s]["port"]) for s in other)
+    if not other_alive:
+        for name in SIDES[side]["kill"]:
+            ps(f"Stop-Process -Name {name} -Force -ErrorAction SilentlyContinue")
 
 def launch_once(side, adapter):
     cfg = SIDES[side]
@@ -63,8 +79,8 @@ def launch_once(side, adapter):
                 return True
             print(f"[watchdog] {side} RPC 通但显存未涨({baseline}→{used}MiB),判错卡", flush=True)
             return False
-        # 进程已死则不必等满
-        r = ps(f"(Get-Process {SIDES[side]['kill'][0]} -ErrorAction SilentlyContinue) -ne $null")
+        # 进程已死则不必等满(按命令行端口判存,双实例同名不能按进程名)
+        r = ps(f"({_port_procs_ps(side)} | Measure-Object).Count -gt 0")
         if r.stdout.strip() != "True":
             print(f"[watchdog] {side} 进程已消失(adapter={adapter})", flush=True)
             return False
@@ -84,7 +100,7 @@ def restart(side):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--side", choices=["ue5", "ue4"], required=True)
+    ap.add_argument("--side", choices=list(SIDES), required=True)
     ap.add_argument("--max-restarts", type=int, default=3)
     args = ap.parse_args()
     port = SIDES[args.side]["port"]

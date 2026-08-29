@@ -1,0 +1,77 @@
+{
+ "ds": 86.1802,
+ "rc": 96.9404,
+ "penalty": 0.886,
+ "completed": 207,
+ "failures": [
+  {
+   "route": "RouteScenario_1825_rep0",
+   "status": "Failed - TickRuntime",
+   "ds": 19.11
+  },
+  {
+   "route": "RouteScenario_23658_rep0",
+   "status": "Failed - Agent deviated from the route",
+   "ds": 76.14
+  },
+  {
+   "route": "RouteScenario_23670_rep0",
+   "status": "Failed - Agent got blocked",
+   "ds": 54.32
+  },
+  {
+   "route": "RouteScenario_25358_rep0",
+   "status": "Failed - TickRuntime",
+   "ds": 32.18
+  },
+  {
+   "route": "RouteScenario_3410_rep0",
+   "status": "Failed - TickRuntime",
+   "ds": 28.0
+  },
+  {
+   "route": "RouteScenario_4468_rep0",
+   "status": "Failed - TickRuntime",
+   "ds": 27.32
+  },
+  {
+   "route": "RouteScenario_23918_rep0",
+   "status": "Failed - Agent got blocked",
+   "ds": 47.24
+  },
+  {
+   "route": "RouteScenario_24098_rep0",
+   "status": "Failed - Agent deviated from the route",
+   "ds": 96.08
+  },
+  {
+   "route": "RouteScenario_24294_rep0",
+   "status": "Failed - TickRuntime",
+   "ds": 45.69
+  },
+  {
+   "route": "RouteScenario_25845_rep0",
+   "status": "Failed - TickRuntime",
+   "ds": 28.02
+  },
+  {
+   "route": "RouteScenario_25857_rep0",
+   "status": "Failed - TickRuntime",
+   "ds": 33.83
+  },
+  {
+   "route": "RouteScenario_26393_rep0",
+   "status": "Failed - TickRuntime",
+   "ds": 0.0
+  },
+  {
+   "route": "RouteScenario_26408_rep0",
+   "status": "Failed - TickRuntime",
+   "ds": 9.14
+  }
+ ],
+ "sources": [
+  "logs/t12-220-halfA/result.json",
+  "logs/t12-220-halfB/result.json"
+ ]
+}

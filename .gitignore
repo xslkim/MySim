@@ -1,2 +1,10 @@
 # 外部仓库克隆(独立 .git,不纳入本仓)
 external/
+
+# 大体积产物:checkpoints(51GB+)/评测日志与 viz——文档与成绩摘要在 state/ 入库,原始产物留盘不入库
+data/
+logs/
+
+# Python
+__pycache__/
+*.pyc
