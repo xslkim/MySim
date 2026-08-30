@@ -34,3 +34,14 @@
 - 10:13 巡检㉑:正常(12/220 meanDS=87.5);无处置
 - 10:43 巡检㉒:正常(16/220 meanDS=80.2,Completed 14;日志 93s 前写入属帧间正常);无处置
 - 11:1x **用户决策(D16):AutoMoT 不跑 220 全量,改跑 1/4 分层子集 56 条先打通流程,全量有需要再回头补**——v2 已停(17/220 有效进度保留),tools/t13_select_quarter56.py 生成 bench2drive_quarter56.xml(town/4 配额,Town12×26/Town13×12/其余~1-3),bash-zkryhdom + 看门狗 bash-vcxnty6o 在跑,--resume 确认接管 17 条重叠跳过;预计 ~5h 收官 → CP1 报告按子集口径(注明非全量)
+- 11:14 巡检㉓:正常但**修正认知**——AutoMoT vendored evaluator 的 --resume 按当前 xml 重建 checkpoint:v2 的 17 条中仅与 quarter56 重叠的 2 条(1711/1825)保留,其余 15 条成绩从 result.json 丢弃(viz 仍在);当前 2/56 在跑第 3 条,健康。后续若补全量,被弃 15 条需重跑(~2h),可接受
+- 11:43 巡检㉔:正常(q56 2/56,第 3 条 Town12 长路线在跑,日志实时);无处置
+- 12:13 巡检㉕:正常(q56 3/56 meanDS=86.7 全 Completed);无处置
+- 12:43 巡检㉖:正常(q56 6/56 meanDS=74.1 Completed 5;70s 帧间正常);无处置
+- 13:13 巡检㉗:正常(q56 12/56 meanDS=86.9 Completed 11,速率回升);无处置
+- 13:43–16:13 巡检㉘–㉜(合并):正常(q56 35/56 meanDS=86.96≈官方 87.34,Completed 33;剩 21 条 ETA ~19:00);无处置
+- 16:43 巡检㉝:正常(q56 41/56 meanDS=88.87,Completed 39);无处置
+- 17:13 巡检㉞:正常(q56 46/56 meanDS=90.1 Completed 44;剩 10 条 ETA ~18:30);无处置
+- 17:43 巡检㉟:正常(q56 49/56 meanDS=90.7 Completed 47);无处置
+- 18:13 巡检㊱:正常(q56 55/56 meanDS=89.7 Completed 53,最后 1 条在跑);下一班大概率收官 → 触发 CP1 汇总
+- 18:3x 巡检㊲=收官班:**q56 跑完(56/56 DS=89.17/RC=98.89/Completed 54),server 收编,guardian 自退;CP1 报告落盘 state/CP1-report.md,判据全过 → M1 收口 PASS;巡检 cron 已停(授权期满);M2 待用户审 CP1 后授权**
