@@ -1,0 +1,14 @@
+{
+  "total_route_runs": 60,
+  "completed": 60,
+  "failed_routes": [],
+  "overall": {
+    "score_composed": 91.704362,
+    "success_rate": 91.66666666666667
+  },
+  "per_seed": [
+    {"seed": 0, "score_composed": 95.022686, "success_rate": 95.0, "num_completed": 19},
+    {"seed": 1, "score_composed": 85.066023, "success_rate": 85.0, "num_completed": 17},
+    {"seed": 2, "score_composed": 95.024377, "success_rate": 95.0, "num_completed": 19}
+  ]
+}

@@ -1,0 +1,11 @@
+# EXP-T2.4-trivial-ue5: UE5 trivial agent 全程无人值守
+dt: 0.05
+sync_mode: true
+simulator: CARLA 0.10.0 (UE5)
+map: Town10HD_Opt
+routes: data/routes/ue5_aligned_routes.xml (20 routes × 3 seeds)
+agent: TM autopilot (trivial)
+vehicle: vehicle.lincoln.mkz
+max_game_time_per_route: 120s
+port: 2021
+tm_port: 8000
