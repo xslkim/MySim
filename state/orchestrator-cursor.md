@@ -27,3 +27,6 @@
 - 07:14 巡检⑮:**异常处置**——AutoMoT 18/220 时 meanDS=27.5(官方 87.34),14/18 失败签名系统性爬行(TickRuntime RC 35–58%);已停 220 全量+看门狗,server 收编(GPU 回 1.5GB),派 agent-23 诊断(权重装载完整性/控制链路/双专家开关/传感器配置/ckpt 代际);下一步:据诊断结论修复后重冒烟再决定是否重启 220
 - 07:43 巡检⑯:正常——诊断 agent-23 活跃(GPU 19.5GB,已出 logs/t13-smoke3-fix1 修复验证冒烟在跑);无处置
 - 08:05 处置闭环:**AutoMoT 根因坐实并修复**——ckpt 跨代际改名 transfuser_proj→bev_encoder_proj,单层随机初始化致 BEV token 全垃圾;补丁 _CKPT_KEY_RENAMES(automot_utils.py),冒烟三线 DS 25/59/13→全 100;作废数据归档 logs/t13-full220-broken-bev*;**220 全量 v2 已重启(bash-yzmib7l2 + 看门狗 bash-7g510xjp),装载确认 0 missing/0 unexpected**;AGENTS.md 坑录 +1
+- 08:13 巡检⑰:正常——**v2 修复在全量生效:3/220 全 DS=100**(对照 v1 同期 3 条 meanDS≈27);无处置
+- 08:43 巡检⑱:正常(6/220 meanDS=93.3 全 Completed);无处置
+- 09:13 巡检⑲:正常(10/220 meanDS=96.0);无处置
